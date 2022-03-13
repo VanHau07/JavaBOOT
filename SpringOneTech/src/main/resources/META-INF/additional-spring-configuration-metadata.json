@@ -1,0 +1,47 @@
+{"properties": [
+  {
+    "name": "db.driver",
+    "type": "java.lang.String",
+    "description": "A description for 'db.driver'"
+  },
+  {
+    "name": "db.url",
+    "type": "java.lang.String",
+    "description": "A description for 'db.url'"
+  },
+  {
+    "name": "db.username",
+    "type": "java.lang.String",
+    "description": "A description for 'db.username'"
+  },
+  {
+    "name": "db.password",
+    "type": "java.lang.String",
+    "description": "A description for 'db.password'"
+  },
+  {
+    "name": "hb.show-sql",
+    "type": "java.lang.String",
+    "description": "A description for 'hb.show-sql'"
+  },
+  {
+    "name": "hb.ddl-auto",
+    "type": "java.lang.String",
+    "description": "A description for 'hb.ddl-auto'"
+  },
+  {
+    "name": "hb.dialect",
+    "type": "java.lang.String",
+    "description": "A description for 'hb.dialect'"
+  },
+  {
+    "name": "hb.session",
+    "type": "java.lang.String",
+    "description": "A description for 'hb.session'"
+  },
+  {
+    "name": "security.basic.enabled",
+    "type": "java.lang.String",
+    "description": "A description for 'security.basic.enabled'"
+  }
+]}

@@ -1,0 +1,539 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 12.6
+-- Dumped by pg_dump version 12.6
+
+-- Started on 2022-03-13 23:51:12
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 203 (class 1259 OID 139302)
+-- Name: categorys; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.categorys (
+    id bigint NOT NULL,
+    ten character varying(255) NOT NULL,
+    hinh_anh character varying(255) NOT NULL,
+    parent_id bigint,
+    check_id bigint
+);
+
+
+ALTER TABLE public.categorys OWNER TO postgres;
+
+--
+-- TOC entry 204 (class 1259 OID 139317)
+-- Name: menus; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.menus (
+    id bigint NOT NULL,
+    name character varying(255) NOT NULL,
+    link character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.menus OWNER TO postgres;
+
+--
+-- TOC entry 207 (class 1259 OID 196667)
+-- Name: order_details; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.order_details (
+    id bigint NOT NULL,
+    giaban double precision,
+    soluongban bigint,
+    giamgia double precision,
+    id_orders bigint,
+    id_products bigint
+);
+
+
+ALTER TABLE public.order_details OWNER TO postgres;
+
+--
+-- TOC entry 209 (class 1259 OID 204905)
+-- Name: order_details_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.order_details ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.order_details_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- TOC entry 206 (class 1259 OID 196659)
+-- Name: orders; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.orders (
+    id bigint NOT NULL,
+    ngaydat date,
+    phone bigint,
+    dia_chi character varying(200),
+    tien double precision,
+    chuthich character varying(200),
+    status character varying(50),
+    mau character varying(200),
+    email character varying(200),
+    id_users character varying(200)
+);
+
+
+ALTER TABLE public.orders OWNER TO postgres;
+
+--
+-- TOC entry 208 (class 1259 OID 204903)
+-- Name: orders_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.orders ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.orders_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- TOC entry 202 (class 1259 OID 106497)
+-- Name: products; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.products (
+    id integer NOT NULL,
+    ten character varying(255) NOT NULL,
+    mo_ta character varying(255),
+    gia_goc numeric NOT NULL,
+    gia_nhap_vao numeric DEFAULT 0 NOT NULL,
+    soluong integer DEFAULT 0 NOT NULL,
+    thoi_gian date DEFAULT CURRENT_TIMESTAMP,
+    ma_giam double precision DEFAULT 0 NOT NULL,
+    hinh_anh character varying(255) NOT NULL,
+    deal_week boolean DEFAULT false NOT NULL,
+    deal_favor boolean DEFAULT false NOT NULL,
+    deal_new boolean DEFAULT false NOT NULL,
+    deal_best boolean DEFAULT false NOT NULL,
+    sale boolean DEFAULT false NOT NULL,
+    deal_hot boolean DEFAULT false NOT NULL,
+    id_category integer NOT NULL,
+    mo_ta_ngan character varying(255) NOT NULL,
+    chu_de character varying(255) NOT NULL,
+    anh_1 character varying(255),
+    anh_2 character varying(255),
+    anh_3 character varying(255),
+    giam_gia bigint,
+    luot_xem bigint,
+    luot_thich bigint,
+    detail_image character varying(255)
+);
+
+
+ALTER TABLE public.products OWNER TO postgres;
+
+--
+-- TOC entry 210 (class 1259 OID 221492)
+-- Name: products_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.products ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.products_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- TOC entry 205 (class 1259 OID 188467)
+-- Name: users; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.users (
+    id_user character varying(100) NOT NULL,
+    full_name character varying(255),
+    password character varying(255),
+    phone character varying(50),
+    email character varying(200),
+    address character varying(255),
+    activated boolean,
+    admin boolean,
+    images character varying(200)
+);
+
+
+ALTER TABLE public.users OWNER TO postgres;
+
+--
+-- TOC entry 2869 (class 0 OID 139302)
+-- Dependencies: 203
+-- Data for Name: categorys; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.categorys (id, ten, hinh_anh, parent_id, check_id) FROM stdin;
+1	Điện thoại	images	0	1
+2	Laptop\n	images	0	2
+3	Máy tính bảng	images	0	3
+4	Đồng hồ	images	0	4
+5	Loa	images	0	5
+6	OPPO\n	images	1	1
+7	IPHONE	images	1	1
+8	DELL	images	1	1
+9	LENOVO\n	images	1	1
+10	HP	images	1	1
+11	Phụ kiện	images	0	2
+12	Linh kiện	images	0	2
+13	Đồ điện	images	0	2
+15	Vật dụng	images	0	2
+14	Đa dụng\n	images	0	2
+\.
+
+
+--
+-- TOC entry 2870 (class 0 OID 139317)
+-- Dependencies: 204
+-- Data for Name: menus; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.menus (id, name, link) FROM stdin;
+1	Trang chủ	/
+2	Bài viết	/blog
+4	Liên hệ	/contact
+5	Dịch vụ	/service 
+6	khuyến mãi	/promation
+3	Giỏ hàng	/cart/view
+\.
+
+
+--
+-- TOC entry 2873 (class 0 OID 196667)
+-- Dependencies: 207
+-- Data for Name: order_details; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.order_details (id, giaban, soluongban, giamgia, id_orders, id_products) FROM stdin;
+1	19990000	1	20	3	1
+2	19990000	1	20	4	1
+3	19990000	1	20	5	1
+4	19990000	1	20	6	1
+5	19990000	1	20	7	1
+6	1990000	1	20	8	31
+7	5145000	2	15	9	49
+8	5900000	1	15	10	74
+9	12300000	1	12	11	88
+10	12300000	1	12	12	90
+11	12300000	1	12	13	89
+12	12300000	1	22	14	95
+13	4990000	1	15	15	66
+14	4690000	1	10	16	7
+15	12300000	1	2	17	96
+16	12300000	1	12	18	90
+17	12300000	1	32	19	94
+18	12300000	1	12	20	91
+19	18990000	1	20	21	3
+20	26990000	1	45	22	10
+21	690000	1	15	23	78
+22	30990000	1	14	24	4
+23	31900000	1	15	25	48
+\.
+
+
+--
+-- TOC entry 2872 (class 0 OID 196659)
+-- Dependencies: 206
+-- Data for Name: orders; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.orders (id, ngaydat, phone, dia_chi, tien, chuthich, status, mau, email, id_users) FROM stdin;
+2	2022-03-02	1647310987	df, ewr	15192000	Nhanh	Chưa giao hàng	\N	hau1647310659@gmail.com	Hau1234
+3	2022-03-03	321456789	df, ewr	15992000	Nhanh	Chưa giao hàng	\N	hau1647310659@gmail.com	Hau1234
+4	2022-03-03	321456789	df, ewr	15992000	Chỉ	Chưa giao hàng	\N	hau1647310659@gmail.com	Hau1234
+5	2022-03-03	36547891	df, ewr	15992000	Nhanh	Chưa giao hàng	\N	long@gmail.com	Hau1234
+6	2022-03-03	321456879	df, ewr	15992000	Nan	Chưa giao hàng	\N	long@gmail.com	Hau1235
+7	2022-03-10	347310659	12	15992000	<p>ok</p>	Đã giao kho	\N	hau1647310659@gmail.com	Hau1235
+8	2022-03-13	654789123	12	1592000	Nhanh 	Chưa giao hàng	\N	haunguyenvanit07@gmail.com	ThanhHai123
+9	2022-03-13	347310659	df, ewr	8746500	kk	Chưa giao hàng	\N	haunguyenvanit07@gmail.com	ThanhHai123
+10	2022-03-13	347310659	df, ewr	5015000	ư	Chưa giao hàng	\N	hau1647310659@gmail.com	ThanhHai123
+11	2022-03-13	347310659	12	10824000	s	Chưa giao hàng	\N	haunguyenvanit07@gmail.com	ThanhHai123
+12	2022-03-13	347310659	df, ewr	10824000	k	Chưa giao hàng	\N	long@gmail.com	ThanhHai123
+13	2022-03-13	347310659	12	10824000	ứ	Chưa giao hàng	\N	haunguyenvanit07@gmail.com	ThanhHai123
+14	2022-03-13	347310659	df, ewr	9594000	<p>l</p>	Đã giao kho	\N	haunguyenvanit07@gmail.com	ThanhHai123
+15	2022-03-13	347310659	12	4241500	q	Chưa giao hàng	\N	haunguyenvanit07@gmail.com	Hau1235
+16	2022-03-13	347310659	df, ewr	4221000	5	Chưa giao hàng	\N	haunguyenvanit07@gmail.com	Hau1235
+17	2022-03-13	347310659	df, ewr	12054000	4	Chưa giao hàng	\N	haunguyenvanit07@gmail.com	Hau1235
+18	2022-03-13	347310659	df, ewr	10824000	7	Chưa giao hàng	\N	haunguyenvanit07@gmail.com	Hau1235
+19	2022-03-13	347310659	df, ewr	8363999.999999999	o	Chưa giao hàng	\N	haunguyenvanit07@gmail.com	Hau1235
+20	2022-03-13	347310659	df, ewr	10824000	p	Chưa giao hàng	\N	haunguyenvanit07@gmail.com	Hau1235
+21	2022-03-13	347310659	df, ewr	15192000	sd	Chưa giao hàng	\N	haunguyenvanit07@gmail.com	Hau1235
+22	2022-03-13	347310659	df, ewr	14844500.000000002	a	Chưa giao hàng	\N	haunguyenvanit07@gmail.com	Hau1235
+23	2022-03-13	347310659	df, ewr	586500	34	Chưa giao hàng	\N	haunguyenvanit07@gmail.com	Hau1235
+24	2022-03-13	347310659	df, ewr	26651400	s	Chưa giao hàng	\N	haunguyenvanit07@gmail.com	Hau1235
+25	2022-03-13	347310659	df, ewr	27115000	e	Chưa giao hàng	\N	haunguyenvanit07@gmail.com	Hau1235
+\.
+
+
+--
+-- TOC entry 2868 (class 0 OID 106497)
+-- Dependencies: 202
+-- Data for Name: products; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.products (id, ten, mo_ta, gia_goc, gia_nhap_vao, soluong, thoi_gian, ma_giam, hinh_anh, deal_week, deal_favor, deal_new, deal_best, sale, deal_hot, id_category, mo_ta_ngan, chu_de, anh_1, anh_2, anh_3, giam_gia, luot_xem, luot_thich, detail_image) FROM stdin;
+86	Iphone 14 ZSMAX	<p>d</p>	200000	150000	12	2022-03-12	10	oppo-reno6.jpg	f	f	f	t	f	f	1	<p>s</p>	Điện thoại	realme-c35.jpg	reno_7.png	samsung-galaxy.jpg	\N	\N	\N	oppo-reno6-z.jpg
+90	Đế điện thoại 	Giúp điện thoại của bạn được bảo vệ 1 cách tốt nhất	12300000	1000000	16	2022-03-12	12	de-dien-thoai.jpg	f	f	t	f	f	f	14	á	Đa dụng	de-dien-thoai.jpg	de-dien-thoai.jpg	de-dien-thoai.jpg	\N	\N	\N	\N
+92	Túi đựng Airpods	Bảo về tai nghe của bạn không bị va đập 	12300000	1000000	16	2022-03-12	12	tui-dung-airpods.jpg	f	f	t	f	f	f	15	á	Vật dụng	tui-dung-airpods.jpg	tui-dung-airpods.jpg	tui-dung-airpods.jpg	\N	\N	\N	\N
+88	Bóng đèn thông minh	Rất tiện lợi cho ngôi nhà thông minh	12300000	1000000	16	2022-03-12	12	bong-den-thong-minh.jpg	f	f	t	f	f	f	13	sa	Đồ điện	bong-den-thong-minh.jpg	bong-den-thong-minh.jpg	bong-den-thong-minh.jpg	\N	\N	\N	\N
+89	Dây da đồng hộ	Thiết kế sang trọng thêm cho đồng hồ của bạn	12300000	1000000	16	2022-03-12	12	day-da.jpg	f	f	t	f	f	f	15	á	Vật dụng	day-da.jpg	day-da.jpg	day-da.jpg	\N	\N	\N	\N
+91	Pin sạc dự phòng	Tiện lợi khi đi xa 	12300000	1000000	16	2022-03-12	12	pin-polymer.jpg	f	f	t	f	f	f	12	á	Linh kiện	pin-polymer.jpg	pin-polymer.jpg	pin-polymer.jpg	\N	\N	\N	\N
+13	Realme 6 Pro	Màn hình 6.6", Chip Snapdragon 720G	6990000	6990000	5	2020-07-12	22	realme-6-pro-do.jpg	t	t	f	f	f	f	1	Sản phẩm của trung..	Điện thoại	realme-c21y-den-1-org.jpg	realme-c21y-den-2-org.jpg	realme-c21y-den-3-org.jpg	11	\N	1	\N
+14	Realme 8 5G	Màn hình 6.5", Chip MediaTek Dimensity 700	7990000	7690000	4	2020-07-12	23	realme-8-5g-blue.jpg	t	t	f	f	f	f	1	Sản phẩm của trung..	Điện thoại	realme-c21y-den-1-org.jpg	realme-c21y-den-2-org.jpg	realme-c21y-den-3-org.jpg	20	\N	2	\N
+15	Realme 8 Pro	Màn hình 6.4", Chip Snapdragon 720G	8690000	8690000	4	2020-07-12	14	realme-8-pro-vang.jpg	t	t	f	f	f	f	1	Sản phẩm của trung..	Điện thoại	realme-c21y-den-1-org.jpg	realme-c21y-den-2-org.jpg	realme-c21y-den-3-org.jpg	21	\N	5	\N
+16	Realme 8	Màn hình 6.4", Chip MediaTek Helio G95	7290000	6990000	3	2020-07-12	16	realme-8-silver.jpg	t	t	f	f	f	f	1	Sản phẩm của trung..	Điện thoại	realme-c21y-den-1-org.jpg	realme-c21y-den-2-org.jpg	realme-c21y-den-3-org.jpg	17	\N	9	\N
+17	Realme C21Y 4GB	Màn hình 6.5", Chip Spreadtrum T610 8 nhân	3990000	3790000	2	2020-07-12	42	realme-c21y-black.jpg	t	t	f	f	f	f	1	Sản phẩm của trung..	Điện thoại	realme-c21y-den-1-org.jpg	realme-c21y-den-2-org.jpg	realme-c21y-den-3-org.jpg	0	\N	4	\N
+18	Realme C25s	Màn hình 6.5", Chip MediaTek Helio G85	4990000	4990000	4	2020-07-12	12	realme-c25s-grey-7.jpg	t	t	f	f	f	f	1	Sản phẩm của trung..	Điện thoại	realme-c21y-den-1-org.jpg	realme-c21y-den-2-org.jpg	realme-c21y-den-3-org.jpg	14	\N	6	\N
+93	Pin sạc dự phòng ADV 	Pin sạc dự phòng ADV mang lại sự tiện lời khi đi xa	12300000	1000000	12	2022-03-12	32	ava-plus.jpg	f	f	t	f	f	f	11	2	Phụ kiện\n	ava-plus.jpg	ava-plus.jpg	ava-plus.jpg	\N	\N	\N	\N
+95	Mặt dây truyền vàng nữ	Giúp bạn tự tin hơn trong đám đông	12300000	1000000	12	2022-03-12	22	mat-day-chuyen-vang.jpg	f	f	t	f	f	f	13	2	Vật dụng	mat-day-chuyen-vang.jpg	mat-day-chuyen-vang.jpg	mat-day-chuyen-vang.jpg	\N	\N	\N	\N
+96	Mắt kính thời gian nữ	Giúp bảo vệ mắt của bạn	12300000	1000000	12	2022-03-12	2	mat-kinh-thoi-trang-nu.jpg	f	f	t	f	f	f	14	2	Vật dụng	mat-kinh-thoi-trang-nu.jpg	mat-kinh-thoi-trang-nu.jpg	mat-kinh-thoi-trang-nu.jpg	\N	\N	\N	\N
+97	Ổ cắm	Giúp bạn thoải mái hơn trong việc tìm nguồn điện gần 	12300000	1000000	2	2022-03-12	22	o-camjpg.jpg	f	f	t	f	f	f	15	2	Phụ kiện	o-camjpg.jpg	o-camjpg.jpg	o-camjpg.jpg	\N	\N	\N	\N
+94	Ba da điện thoại Smartphone	Giúp bảo về điện thoại của bạn	12300000	1000000	12	2022-03-12	32	bao-da-smart.jpg	f	f	t	f	f	f	11	2	Phụ kiện	bao-da-smart.jpg	bao-da-smart.jpg	bao-da-smart.jpg	\N	\N	\N	\N
+98	Điện thoại iPhone 13 Pro Max 256GB	Bảo hành chính hãng điện thoại 1 năm tại các trung tâm bảo hành hãng 	36990000	32000000	12	2022-03-12	10	iphone-13-pro-max-gold-1-600x600.jpg	f	f	f	f	f	t	1	2	Điện thoại	iphone-13-pro-max-gold-1-600x600.jpg	iphone-13-pro-max-gold-1-600x600.jpg	iphone-13-pro-max-gold-1-600x600.jpg	\N	\N	\N	\N
+9	OPPO A74	Màn hình 6.43", Chip Snapdragon 662	6690000	6690000	2	2020-07-12	45	oppo-a74-blue.jpg	t	t	f	f	f	f	1	Sản phẩm của trung..	Điện thoại	oppo-a74-xanh-duong-1-org.jpg	oppo-a74-xanh-duong-2-org.jpg	oppo-a74-xanh-duong-3-org.jpg	0	\N	8	\N
+12	OPPO Reno6 Z 5G	Màn hình 6.43", Chip MediaTek Dimensity 800U 5G	27990000	27990000	3	2020-07-12	21	oppo-reno6-z-5g-aurora.jpg	t	t	f	f	f	f	1	Sản phẩm của trung..	Điện thoại	oppo-a74-xanh-duong-1-org.jpg	oppo-a74-xanh-duong-2-org.jpg	oppo-a74-xanh-duong-3-org.jpg	12	\N	5	\N
+1	iPhone 11 128GB	Màn hình 6.1", Chip Apple A13 Bionic	19990000	16990000	5	2020-07-12	20	iphone-11-128gb.jpg	t	t	f	f	f	f	1	Theo chu kỳ cứ mỗi 3 năm thì iPhone lại thay đổi thiết kế và 2020 là năm đánh dấu cột mốc quan trong này, vì thế rất có thể đây là thời điểm các mẫu iPhone 12 sẽ có một sự thay đổi mạnh mẽ về thiết kế.	Điện thoại	iphone-11-xanh-la_1.jpg	iphone-11-128gb-xanh-la-2-org.jpg	iphone-11-128gb-xanh-la-3-org.jpg	0	\N	1	\N
+2	iPhone 12 64GB	Màn hình 6.1", Chip Apple A14 Bionic	22990000	20690000	6	2020-07-12	10	iphone-12.jpg	t	t	f	f	f	f	1	Sản phẩm của trung..	Điện thoại	iphone-12-violet-gc-org.jpg	iphone-12-xanh-duong-1-1-org.jpg	iphone-12-xanh-la-1-1-org.jpg	0	\N	2	\N
+3	iPhone 12 mini 64GB	Màn hình 5.4", Chip Apple A14 Bionic	18990000	17190000	2	2020-07-12	20	iphone-12-mini.jpg	t	t	f	f	f	f	1	Sản phẩm của trung..	Điện thoại	iphone-12-violet-gc-org.jpg	iphone-12-xanh-duong-1-1-org.jpg	iphone-12-xanh-la-1-1-org.jpg	17	16	6	\N
+6	 iPhone XR 64GB 	Màn hình 6.1", Chip Apple A12 Bionic	14490000	12590000	5	2020-07-12	30	iphone-xr.jpg	t	t	f	f	f	f	1	Sản phẩm của trung..	Điện thoại	iphone-12-violet-gc-org.jpg	iphone-12-xanh-duong-1-1-org.jpg	iphone-12-xanh-la-1-1-org.jpg	27	16	2	\N
+8	OPPO A74 5G	Màn hình 6.5", Chip Snapdragon 480 8 nhân 5G	7990000	7990000	55	2020-07-12	15	oppo-a74-5g-silver.jpg	t	t	f	f	f	f	1	Sản phẩm của trung..	Điện thoại	oppo-a74-xanh-duong-1-org.jpg	oppo-a74-xanh-duong-2-org.jpg	oppo-a74-xanh-duong-3-org.jpg	20	\N	4	\N
+19	Samsung Galaxy A22	Màn hình 6.4", Chip MediaTek MT6769V	5890000	5890000	2	2020-07-12	20	samsung-galaxy-a22-4g-black.jpg	t	t	f	t	f	f	1	Sản phẩm của trung..	Điện thoại	samsung-galaxy-a22-4g-den-1-org.jpg	samsung-galaxy-a22-4g-den-2-org.jpg	samsung-galaxy-a22-4g-den-3-org.jpg	0	\N	5	\N
+20	Samsung Galaxy Note 10+	Màn hình 6.8", Chip Exynos 9825\n\nRAM 12 GB, ROM 256 GB	17990000	16490000	1	2020-07-12	12	samsung-galaxy-note-10-plus-silver-new.jpg	t	t	f	t	f	f	1	Sản phẩm của trung..	Điện thoại	samsung-galaxy-a22-4g-den-1-org.jpg	samsung-galaxy-a22-4g-den-2-org.jpg	samsung-galaxy-a22-4g-den-3-org.jpg	15	\N	6	\N
+78	Loa Bluetooth Harman Kardon	M118BT	690000	690000	6	2020-07-12	15	loa-bluetooth-mozard-e8.jpg	t	t	f	f	f	f	5	5	Loa	loa-bluetooth-mozard-e8.jpg	loa-bluetooth-mozard-e8.jpg	loa-bluetooth-mozard-e8.jpg	\N	\N	\N	\N
+7	OPPO A54	Màn hình 6.5", Chip MediaTek Helio P35	4690000	4360000	6	2020-07-12	10	oppo-a54-4g-black.jpg	t	t	f	f	f	f	10	Sản phẩm của trung..	Điện thoại	oppo-a74-xanh-duong-1-org.jpg	oppo-a74-xanh-duong-2-org.jpg	oppo-a74-xanh-duong-3-org.jpg	16	\N	7	\N
+4	 iPhone 12 Pro 128GB	Màn hình 6.1", Chip Apple A14 Bionic	30990000	28490000	4	2020-07-12	14	iphone-12-pro.jpg	t	t	f	f	f	f	7	Sản phẩm của trung..	Điện thoại	iphone-12-violet-gc-org.jpg	iphone-12-xanh-duong-1-1-org.jpg	iphone-12-xanh-la-1-1-org.jpg	25	\N	12	\N
+5	iPhone SE 128GB	Màn hình 4.7", Chip Apple A13 Bionic	12490000	10490000	20	2020-07-12	20	iphone-se-128gb.jpg	t	t	f	f	f	f	7	Sản phẩm của trung..	Điện thoại	iphone-12-violet-gc-org.jpg	iphone-12-xanh-duong-1-1-org.jpg	iphone-12-xanh-la-1-1-org.jpg	18	17	6	\N
+10	OPPO Find X3 Pro 5G	Màn hình 6.7", Chip Snapdragon 888	26990000	26990000	12	2020-07-12	45	oppo-find-x3-pro-black.jpg	t	t	f	f	f	f	6	Sản phẩm của trung..	Điện thoại	oppo-a74-xanh-duong-1-org.jpg	oppo-a74-xanh-duong-2-org.jpg	oppo-a74-xanh-duong-3-org.jpg	14	\N	3	\N
+11	OPPO Reno5	Màn hình 6.43", Chip Snapdragon 720G	8690000	8040000	10	2020-07-12	10	oppo-reno5.jpg	t	t	f	f	f	f	6	Sản phẩm của trung..	Điện thoại	oppo-a74-xanh-duong-1-org.jpg	oppo-a74-xanh-duong-2-org.jpg	oppo-a74-xanh-duong-3-org.jpg	13	\N	4	\N
+47	Dell Inspiron 7306 i5 1135G7	(N3I5202W)	30900000	2990000	5	2020-07-12	15	lap_dell-inspiron-7306-i5.jpg	t	t	f	f	f	f	8	2	Laptop	dell-g3-15-i7-p89f002bwh-2-org.jpg	dell-g3-15-i7-p89f002bwh-3-org.jpg	dell-g3-15-i7-p89f002bwh-4-org.jpg	\N	\N	\N	\N
+48	Dell Inspiron 7501 i5 10300H	(N5I5012W)	31900000	31790000	5	2020-07-12	15	lap_dell-inspiron-7501-i5.jpg	t	t	f	f	f	f	8	2	Laptop	dell-g3-15-i7-p89f002bwh-2-org.jpg	dell-g3-15-i7-p89f002bwh-3-org.jpg	dell-g3-15-i7-p89f002bwh-4-org.jpg	\N	\N	\N	\N
+21	Samsung Galaxy S20 FE	Màn hình 6.5", Chip Snapdragon 865	15490000	13990000	2	2020-07-12	45	samsung-galaxy-s20.jpg	t	t	f	t	f	f	1	Sản phẩm của trung..	Điện thoại	samsung-galaxy-a22-4g-den-1-org.jpg	samsung-galaxy-a22-4g-den-2-org.jpg	samsung-galaxy-a22-4g-den-3-org.jpg	8	\N	4	\N
+22	Samsung Galaxy S21+ 5G	Màn hình 6.7", Chip Exynos 2100\n\nRAM 8 GB, ROM 256 GB	28990000	19990000	5	2020-07-12	12	samsung-galaxy-s21-plus.jpg	t	t	f	t	f	f	1	Sản phẩm của trung..	Điện thoại	samsung-galaxy-a22-4g-den-1-org.jpg	samsung-galaxy-a22-4g-den-2-org.jpg	samsung-galaxy-a22-4g-den-3-org.jpg	24	\N	3	\N
+23	Samsung Galaxy S21 Ultra 5G	Màn hình 6.8", Chip Exynos 2100\n\nRAM 12 GB, ROM 128 GB	30990000	21990000	3	2020-07-12	12	samsung-galaxy-s21-ultra.jpg	t	t	f	t	f	f	1	Sản phẩm của trung..	Điện thoại	samsung-galaxy-a22-4g-den-1-org.jpg	samsung-galaxy-a22-4g-den-2-org.jpg	samsung-galaxy-a22-4g-den-3-org.jpg	0	\N	3	\N
+24	Samsung Galaxy Z Fold2 5G	Màn hình Chính 7.59" & Phụ 6.23", Chip Snapdragon 865+	50000000	50000000	2	2020-07-12	12	samsung-galaxy-z-fold2.jpg	t	t	f	t	f	f	1	Sản phẩm của trung..	Điện thoại	samsung-galaxy-a22-4g-den-1-org.jpg	samsung-galaxy-a22-4g-den-2-org.jpg	samsung-galaxy-a22-4g-den-3-org.jpg	12	\N	4	\N
+25	Vivo V20 SE	Màn hình 6.44", Chip Snapdragon 665	7190000	6490000	3	2020-07-12	20	vivo-v20-se.jpg	t	t	f	f	f	f	1	23	Điện thoại	vivo-y53s-xanh-tim-1-org.jpg	vivo-y53s-xanh-tim-1-org.jpg	vivo-y53s-xanh-tim-3-org.jpg	\N	\N	\N	\N
+26	Vivo V20 (2021)	Màn hình 6.44", Chip Snapdragon 730	8490000	7790000	3	2020-07-12	20	vivo-v20.jpg	t	t	f	f	f	f	1	1	Điện thoại	vivo-y53s-xanh-tim-1-org.jpg	vivo-y53s-xanh-tim-1-org.jpg	vivo-y53s-xanh-tim-3-org.jpg	\N	\N	\N	\N
+27	Vivo Y12s	Màn hình 6.51", Chip MediaTek Helio P35	4290000	3790000	3	2020-07-12	20	vivo-y12s-2021-black.jpg	t	t	f	f	f	f	1	2	Điện thoại	vivo-y53s-xanh-tim-1-org.jpg	vivo-y53s-xanh-tim-1-org.jpg	vivo-y53s-xanh-tim-3-org.jpg	\N	\N	\N	\N
+28	Vivo Y1s	Màn hình 6.22", Chip MediaTek Helio P35	2450000	2450000	3	2020-07-12	20	vivo-y1s-xanh.jpg	t	t	f	f	f	f	1	3	Điện thoại	vivo-y53s-xanh-tim-1-org.jpg	vivo-y53s-xanh-tim-1-org.jpg	vivo-y53s-xanh-tim-3-org.jpg	\N	\N	\N	\N
+29	Vivo Y20	Màn hình 6.51", Chip Snapdragon 460	3990000	3790000	3	2020-07-12	20	vivo-y20-2021.jpg	t	t	f	f	f	f	1	4	Điện thoại	vivo-y53s-xanh-tim-1-org.jpg	vivo-y53s-xanh-tim-1-org.jpg	vivo-y53s-xanh-tim-3-org.jpg	\N	\N	\N	\N
+30	Vivo Y53s	Màn hình 6.58", Chip MediaTek Helio G80	6990000	6990000	3	2020-07-12	20	vivo-y53s.jpg	t	t	f	f	f	f	1	3	Điện thoại	vivo-y53s-xanh-tim-1-org.jpg	vivo-y53s-xanh-tim-1-org.jpg	vivo-y53s-xanh-tim-3-org.jpg	\N	\N	\N	\N
+31	Acer Aspire 7 A715 42G R4ST	R5 5500U (NH.QAYSV.004)	1990000	18590000	2	2020-07-12	20	lap_acer-aspire-7-a715.jpg	t	t	f	f	f	f	2	2	Laptop	acer-nitro-5-an515-45-r3sm-r5-nhqbmsv005-1-org.jpg	acer-nitro-5-an515-45-r3sm-r5-nhqbmsv005-2-1-org.jpg	acer-nitro-5-an515-45-r3sm-r5-nhqbmsv005-4-1-org.jpg	\N	\N	\N	\N
+32	Acer Aspire 7 A715 41G R150	R7 3750H (NH.Q8SSV.004)	21490000	20450000	3	2020-07-12	20	lap_acer-aspire-7-a715-42g-r4st-r5.jpg	t	t	f	f	f	f	2	1	Laptop	acer-nitro-5-an515-45-r3sm-r5-nhqbmsv005-1-org.jpg	acer-nitro-5-an515-45-r3sm-r5-nhqbmsv005-2-1-org.jpg	acer-nitro-5-an515-45-r3sm-r5-nhqbmsv005-4-1-org.jpg	\N	\N	\N	\N
+33	Acer Nitro 5 AN515 45 R3SM R5	5600H/144Hz (NH.QBMSV.005)	23490000	21840000	3	2020-07-12	20	lap_acer-nitro-5-an515-45-r3sm-r5.jpg	t	t	f	f	f	f	2	2	Laptop	acer-nitro-5-an515-45-r3sm-r5-nhqbmsv005-1-org.jpg	acer-nitro-5-an515-45-r3sm-r5-nhqbmsv005-2-1-org.jpg	acer-nitro-5-an515-45-r3sm-r5-nhqbmsv005-4-1-org.jpg	\N	\N	\N	\N
+34	Acer Swift 3 SF313 51 56UW i5	8250U (NX.H3ZSV.002)	23990000	23490000	3	2020-07-12	20	lap_acer-swift-sf5-i5.jpg	t	t	f	f	f	f	2	2	Laptop	acer-nitro-5-an515-45-r3sm-r5-nhqbmsv005-1-org.jpg	acer-nitro-5-an515-45-r3sm-r5-nhqbmsv005-2-1-org.jpg	acer-nitro-5-an515-45-r3sm-r5-nhqbmsv005-4-1-org.jpg	\N	\N	\N	\N
+35	MacBook Air M1 2020 Gold	(Z12A00050)	39490000	36490000	3	2020-07-12	20	lap_apple-macbook-air-2020-m1.jpg	t	t	f	f	f	f	2	2	Laptop	apple-macbook-pro-m1-2020-z11d000e5-2-org.jpg	apple-macbook-pro-m1-2020-z11d000e5-3-org.jpg	apple-macbook-pro-m1-2020-z11d000e5-4-org.jpg	\N	\N	\N	\N
+36	MacBook Air M1 2020 Space	Grey (MGN73SA/A)	34990000	32540000	3	2020-07-12	20	lap_apple-macbook-air-m1-2020.jpg	t	t	f	f	f	f	2	2	Laptop	apple-macbook-pro-m1-2020-z11d000e5-2-org.jpg	apple-macbook-pro-m1-2020-z11d000e5-3-org.jpg	apple-macbook-pro-m1-2020-z11d000e5-4-org.jpg	\N	\N	\N	\N
+37	MacBook Air 2017 	MQD32SA/A	19990000	19990000	4	2020-07-12	20	lap_apple-macbook-air-mqd32sa.jpg	t	t	f	f	f	f	2	2	Laptop	apple-macbook-pro-m1-2020-z11d000e5-2-org.jpg	apple-macbook-pro-m1-2020-z11d000e5-3-org.jpg	apple-macbook-pro-m1-2020-z11d000e5-4-org.jpg	\N	\N	\N	\N
+38	MacBook Pro M1 2020 Silver	(Z11D000E5)	39990000	37190000	4	2020-07-12	15	lap_apple-macbook-pro-2020.jpg	t	t	f	f	f	f	2	2	Laptop	apple-macbook-pro-m1-2020-z11d000e5-2-org.jpg	apple-macbook-pro-m1-2020-z11d000e5-3-org.jpg	apple-macbook-pro-m1-2020-z11d000e5-4-org.jpg	\N	\N	\N	\N
+39	MacBook Pro M1 2020 Space	(Z11C)	44990000	41840000	4	2020-07-12	15	lap_apple-macbook-pro-2020-z11c-3.jpg	t	t	f	f	f	f	2	2	Laptop	apple-macbook-pro-m1-2020-z11d000e5-2-org.jpg	apple-macbook-pro-m1-2020-z11d000e5-3-org.jpg	apple-macbook-pro-m1-2020-z11d000e5-4-org.jpg	\N	\N	\N	\N
+40	MacBook Pro M1 2020 Space	(MYD92SA/A)	3990000	3690000	4	2020-07-12	15	lap_apple-macbook-pro-m1.jpg	t	t	f	f	f	f	2	2	Laptop	apple-macbook-pro-m1-2020-z11d000e5-2-org.jpg	apple-macbook-pro-m1-2020-z11d000e5-3-org.jpg	apple-macbook-pro-m1-2020-z11d000e5-4-org.jpg	\N	\N	\N	\N
+41	Asus TUF Gaming FX516PE i7	11370H (HN005T)	29990000	27990000	4	2020-07-12	15	lap_asus-tuf-gaming-fx516pm-i7.jpg	t	t	f	f	f	f	2	2	Laptop	asus-tuf-gaming-fx706he-i7-hx011t-1-org.jpg	asus-tuf-gaming-fx706he-i7-hx011t-2-org.jpg	asus-tuf-gaming-fx706he-i7-hx011t-6-org.jpg	\N	\N	\N	\N
+42	Asus TUF Gaming FX506HC i7	11800H (HN001T)	28900000	27900000	4	2020-07-12	5	lap_asus-tuf-gaming-fx706he-i7.jpg	t	t	f	f	f	f	2	22	Laptop	asus-tuf-gaming-fx706he-i7-hx011t-1-org.jpg	asus-tuf-gaming-fx706he-i7-hx011t-2-org.jpg	asus-tuf-gaming-fx706he-i7-hx011t-6-org.jpg	\N	\N	\N	\N
+43	Asus TUF Gaming FX506HC i5	11400H (HN002T)	28790000	27900000	4	2020-07-12	15	lap_asus-zenbook.jpg	t	t	f	f	f	f	2	2	Laptop	asus-tuf-gaming-fx706he-i7-hx011t-1-org.jpg	asus-tuf-gaming-fx706he-i7-hx011t-2-org.jpg	asus-tuf-gaming-fx706he-i7-hx011t-6-org.jpg	\N	\N	\N	\N
+44	Asus ZenBook UX425EA i5	1135G7 (KI429T)	24790000	23890000	5	2020-07-12	15	lap_asus-zenbook-ux425ea-i7.jpg	t	t	f	f	f	f	2	2	Laptop	asus-tuf-gaming-fx706he-i7-hx011t-1-org.jpg	asus-tuf-gaming-fx706he-i7-hx011t-2-org.jpg	asus-tuf-gaming-fx706he-i7-hx011t-6-org.jpg	\N	\N	\N	\N
+45	Dell G3 15 i7 10750H	10750H/120Hz (70225485)	31290000	30890000	5	2020-07-12	5	lap_dell-g3-15-i7.jpg	t	t	f	f	f	f	2	2	Laptop	dell-g3-15-i7-p89f002bwh-2-org.jpg	dell-g3-15-i7-p89f002bwh-3-org.jpg	dell-g3-15-i7-p89f002bwh-4-org.jpg	\N	\N	\N	\N
+46	Dell G5 15 5500 i7	(P89F002BWH)	31390000	31000000	5	2020-07-12	15	lap_dell-g5-15-5500-i7.jpg	t	t	f	f	f	f	2	2	Laptop	dell-g3-15-i7-p89f002bwh-2-org.jpg	dell-g3-15-i7-p89f002bwh-3-org.jpg	dell-g3-15-i7-p89f002bwh-4-org.jpg	\N	\N	\N	\N
+49	Huawei MatePad T10s	 (Nền tảng Huawei Mobile Service)	5145000	5000000	4	2020-07-12	15	ipad_huawei-matepad-xanh.jpg	t	t	f	f	f	f	3	2	Máy tính bảng	huawei-matepad-t10s-2-org.jpg	huawei-matepad-t10s-3-org.jpg	huawei-matepad-t10s-4-org.jpg	\N	\N	\N	\N
+50	Huawei Mediapad 	T5 10.1"	5190000	5190000	4	2020-07-12	5	ipad_huawei-mediapad-t5-den.jpg	t	t	f	f	f	f	3	3	Máy tính bảng	huawei-matepad-t10s-2-org.jpg	huawei-matepad-t10s-3-org.jpg	huawei-matepad-t10s-4-org.jpg	\N	\N	\N	\N
+51	Huawei MatePad T10s	 (Nền tảng Huawei Mobile Service)	5140000	5140000	4	2020-07-12	15	ipad_huawei-t10s.jpg	t	t	f	f	f	f	3	2	Máy tính bảng	huawei-matepad-t10s-2-org.jpg	huawei-matepad-t10s-3-org.jpg	huawei-matepad-t10s-4-org.jpg	\N	\N	\N	\N
+52	Samsung Galaxy Tab A7 Lite	Màn hình 8.7", TFT LCD	4490000	4490000	4	2020-07-12	5	ipad_samsung-galaxy-tab.jpg	t	t	f	f	f	f	3	2	Máy tính bảng	samsung-galaxy-tab-a7-lite-2-2-org.jpg	samsung-galaxy-tab-a7-lite-3-2-org.jpg	samsung-galaxy-tab-a7-lite-4-2-org.jpg	\N	\N	\N	\N
+53	Samsung Galaxy Tab A7 (2020)	Màn hình 10.4", TFT LCD	7990000	7990000	4	2020-07-12	15	ipad_samsung-galaxy-tab-a7-2020-vangdong.jpg	t	t	f	f	f	f	3	3	Máy tính bảng	samsung-galaxy-tab-a7-lite-2-2-org.jpg	samsung-galaxy-tab-a7-lite-3-2-org.jpg	samsung-galaxy-tab-a7-lite-4-2-org.jpg	\N	\N	\N	\N
+54	Samsung Galaxy Tab S7	Màn hình 11", LTPS IPS LCD	18990000	18990000	4	2020-07-12	15	ipad_samsung-galaxy-tab-a7-lite-gray.jpg	t	t	f	f	f	f	3	3	Máy tính bảng	samsung-galaxy-tab-a7-lite-2-2-org.jpg	samsung-galaxy-tab-a7-lite-3-2-org.jpg	samsung-galaxy-tab-a7-lite-4-2-org.jpg	\N	\N	\N	\N
+55	Samsung Galaxy Tab S7 FE	Màn hình 12.4", TFT LCD	13990000	13990000	4	2020-07-12	5	ipad_samsung-galaxy-tab-s6-lite.jpg	t	t	f	f	f	f	3	3	Máy tính bảng	samsung-galaxy-tab-a7-lite-2-2-org.jpg	samsung-galaxy-tab-a7-lite-3-2-org.jpg	samsung-galaxy-tab-a7-lite-4-2-org.jpg	\N	\N	\N	\N
+56	Samsung Galaxy Tab S6 Lite	Màn hình 10.4", PLS LCD	9900000	9900000	4	2020-07-12	15	ipad_samsung-galaxy-tab-s7-fe-green.jpg	t	t	f	f	f	f	3	3	Máy tính bảng	samsung-galaxy-tab-a7-lite-2-2-org.jpg	samsung-galaxy-tab-a7-lite-3-2-org.jpg	samsung-galaxy-tab-a7-lite-4-2-org.jpg	\N	\N	\N	\N
+57	Samsung Galaxy Tab A8 8	T295 (2019)	3690000	3690000	4	2020-07-12	5	ipad_samsung-galaxy-tab-s7-gold-new.jpg	t	t	f	f	f	f	3	3	Máy tính bảng	samsung-galaxy-tab-a7-lite-2-2-org.jpg	samsung-galaxy-tab-a7-lite-3-2-org.jpg	samsung-galaxy-tab-a7-lite-4-2-org.jpg	\N	\N	\N	\N
+58	iPad Air 4 Wifi 64GB (2020)	Màn hình 10.9", Liquid Retina	15990000	15990000	4	2020-07-12	5	ipad-4-cellular-hong-new.jpg	t	t	f	f	f	f	3	3	Máy tính bảng	ipad-pro-m1-129-inch-wifi-256gb-2021-xam-1-org.jpg	ipad-pro-m1-129-inch-wifi-cellular-256gb-2021-bac-2-org.jpg	ipad-pro-m1-129-inch-wifi-cellular-256gb-2021-xam-2-org.jpg	\N	\N	\N	\N
+59	iPad Pro M1 12.9 inch WiFi	Màn hình 12.9", Liquid Retina XDR mini-LED LCD	38600000	38600000	4	2020-07-12	5	ipad-air-4-wifi-64gb-2020-xanhduong.jpg	t	t	f	f	f	f	3	3	Máy tính bảng	ipad-pro-m1-129-inch-wifi-256gb-2021-xam-1-org.jpg	ipad-pro-m1-129-inch-wifi-cellular-256gb-2021-bac-2-org.jpg	ipad-pro-m1-129-inch-wifi-cellular-256gb-2021-xam-2-org.jpg	\N	\N	\N	\N
+60	iPad Pro M1 12.9 inch WiFi	Màn hình 12.9", Liquid Retina XDR mini-LED LCD	35790000	35790000	4	2020-07-12	15	ipad-pro-11-inch-wifi-cellular.jpg	t	t	f	f	f	f	3	3	Máy tính bảng	ipad-pro-m1-129-inch-wifi-256gb-2021-xam-1-org.jpg	ipad-pro-m1-129-inch-wifi-cellular-256gb-2021-bac-2-org.jpg	ipad-pro-m1-129-inch-wifi-cellular-256gb-2021-xam-2-org.jpg	\N	\N	\N	\N
+61	iPad Pro M1 12.9 inch WiFi	Màn hình 12.9", Liquid Retina XDR mini-LED LCD	33690000	33690000	4	2020-07-12	5	ipad-pro-12-9-inch-wifi-128gb-2020-xam.jpg	t	t	f	f	f	f	3	3	Máy tính bảng	ipad-pro-m1-129-inch-wifi-256gb-2021-xam-1-org.jpg	ipad-pro-m1-129-inch-wifi-cellular-256gb-2021-bac-2-org.jpg	ipad-pro-m1-129-inch-wifi-cellular-256gb-2021-xam-2-org.jpg	\N	\N	\N	\N
+62	iPad Pro M1 12.9 inch WiFi	Màn hình 12.9", Liquid Retina XDR mini-LED LCD	30990000	30990000	4	2020-07-12	15	ipad-pro-2021-11-inch-gray.jpg	t	t	f	f	f	f	3	3	Máy tính bảng	ipad-pro-m1-129-inch-wifi-256gb-2021-xam-1-org.jpg	ipad-pro-m1-129-inch-wifi-cellular-256gb-2021-bac-2-org.jpg	ipad-pro-m1-129-inch-wifi-cellular-256gb-2021-xam-2-org.jpg	\N	\N	\N	\N
+63	iPad Pro 12.9 inch Wifi 128GB	Màn hình 12.9", Liquid Retina	26790000	26790000	4	2020-07-12	15	ipad-pro-2021-129-inch-gray.jpg	t	t	f	f	f	f	3	3	Máy tính bảng	ipad-pro-m1-129-inch-wifi-256gb-2021-xam-1-org.jpg	ipad-pro-m1-129-inch-wifi-cellular-256gb-2021-bac-2-org.jpg	ipad-pro-m1-129-inch-wifi-cellular-256gb-2021-xam-2-org.jpg	\N	\N	\N	\N
+64	iPad Pro 11 inch Wifi Cellular	Màn hình 11", Liquid Retina	26200000	26200000	4	2020-07-12	15	ipad-pro-2021-129-inch-silver.jpg	t	t	f	f	t	f	3	3	Máy tính bảng	ipad-pro-m1-129-inch-wifi-256gb-2021-xam-1-org.jpg	ipad-pro-m1-129-inch-wifi-cellular-256gb-2021-bac-2-org.jpg	ipad-pro-m1-129-inch-wifi-cellular-256gb-2021-xam-2-org.jpg	\N	\N	\N	\N
+65	Apple Watch S3 GPS 38mm	viền nhôm dây cao su đen	5990000	5990000	4	2020-07-12	15	apple-watch-3.jpg	t	t	f	f	f	f	4	3	Đồng hồ	apple-watch-3-phien-ban-38-mm-3-2-org.jpg	garmin-forerunner-45-day-silicone-den-4-org-org.jpg	huawei-watch-fit-day-silicone-den-3-1-org.jpg	\N	\N	\N	\N
+66	Samsung Galaxy Watch Active	viền nhôm dây sillicone	4990000	4990000	4	2020-07-12	15	apple-watch-forerunner-45-den.jpg	t	t	f	f	f	f	4	3	Đồng hồ	apple-watch-3-phien-ban-38-mm-3-2-org.jpg	garmin-forerunner-45-day-silicone-den-4-org-org.jpg	huawei-watch-fit-day-silicone-den-3-1-org.jpg	\N	\N	\N	\N
+67	Apple Watch SE 40mm	viền nhôm dây cao su	8909000	8909000	5	2020-07-12	15	apple-watch-huawei-watch-fit-day-silicone.jpg	t	t	f	f	f	f	4	4	Đồng hồ	apple-watch-3-phien-ban-38-mm-3-2-org.jpg	garmin-forerunner-45-day-silicone-den-4-org-org.jpg	huawei-watch-fit-day-silicone-den-3-1-org.jpg	\N	\N	\N	\N
+68	Đồng hồ thông minh Garmin	dây silicone đen	5690000	5690000	5	2020-07-12	15	apple-watch-mi-band-5.jpg	t	t	f	f	f	f	4	4	Đồng hồ	apple-watch-3-phien-ban-38-mm-3-2-org.jpg	garmin-forerunner-45-day-silicone-den-4-org-org.jpg	huawei-watch-fit-day-silicone-den-3-1-org.jpg	\N	\N	\N	\N
+69	Xiaomi Mi Band 5	dây silicone đen	670000	670000	5	2020-07-12	15	apple-watch-samsung-galaxy-watch-3-41mm-vang-dong.jpg	t	t	f	f	f	f	4	4	Đồng hồ	apple-watch-3-phien-ban-38-mm-3-2-org.jpg	garmin-forerunner-45-day-silicone-den-4-org-org.jpg	huawei-watch-fit-day-silicone-den-3-1-org.jpg	\N	\N	\N	\N
+70	Samsung Galaxy Watch 3	viền thép dây da	9490000	9490000	5	2020-07-12	5	apple-watch-samsung-galaxy-watch-active-2-44-mm.jpg	t	t	f	f	f	f	4	4	Đồng hồ	apple-watch-3-phien-ban-38-mm-3-2-org.jpg	garmin-forerunner-45-day-silicone-den-4-org-org.jpg	huawei-watch-fit-day-silicone-den-3-1-org.jpg	\N	\N	\N	\N
+71	Huawei Watch Fit dây silicone	dây silicone	3290000	3290000	5	2020-07-12	5	apple-watch-se-40mm-vien-nhom-day-cao-su-hong.jpg	t	t	t	f	f	f	4	4	Đồng hồ	apple-watch-3-phien-ban-38-mm-3-2-org.jpg	garmin-forerunner-45-day-silicone-den-4-org-org.jpg	huawei-watch-fit-day-silicone-den-3-1-org.jpg	\N	\N	\N	\N
+72	Suunto 7 Dây silicone	dây silicone	14500000	14500000	5	2020-07-12	15	apple-watch-suunto-7-day-silicon-den.jpg	t	t	f	f	f	f	4	4	Đồng hồ	apple-watch-3-phien-ban-38-mm-3-2-org.jpg	garmin-forerunner-45-day-silicone-den-4-org-org.jpg	huawei-watch-fit-day-silicone-den-3-1-org.jpg	\N	\N	\N	\N
+75	Loa Bluetooth Harman Kardon	Go 3	821000	821000	6	2020-07-12	5	loa-bluetooth-jbl-boombox-2-den-ava.jpg	t	t	f	f	f	f	5	5	Loa	loa-bluetooth-jbl-boombox-2-den-ava.jpg	loa-bluetooth-jbl-boombox-2-den-ava.jpg	loa-bluetooth-jbl-boombox-2-den-ava.jpg	\N	\N	\N	\N
+76	Loa Bluetooth JBL	Partybox 100 Đen	8500000	8500000	6	2020-07-12	15	loa-bluetooth-jbl-go-3-xanh-den.jpg	t	t	f	f	f	f	5	5	Loa	loa-bluetooth-jbl-go-3-xanh-den.jpg	loa-bluetooth-jbl-go-3-xanh-den.jpg	loa-bluetooth-jbl-go-3-xanh-den.jpg	\N	\N	\N	\N
+77	Loa Bluetooth JBL 	Onyx Studio 6	4990000	4990000	6	2020-07-12	15	loa-bluetooth-jbl-partybox.jpg	t	t	f	f	f	f	5	5	Loa	loa-bluetooth-jbl-partybox.jpg	loa-bluetooth-jbl-partybox.jpg	loa-bluetooth-jbl-partybox.jpg	\N	\N	\N	\N
+79	Loa vi tính Bluetooth Microlab	M118BT	698000	698000	6	2020-07-12	15	loa-microlab-m118bt-den.jpg	t	t	f	f	f	f	5	5	Loa	loa-microlab-m118bt-den.jpg	loa-microlab-m118bt-den.jpg	loa-microlab-m118bt-den.jpg	\N	\N	\N	\N
+80	Loa Bluetooth JB	JBL Boombox 2	9690000	9690000	6	2020-07-12	15	loa-vi-tinh-microlab-m108.jpg	t	t	f	f	f	f	5	5	Loa	loa-vi-tinh-microlab-m108.jpg	loa-vi-tinh-microlab-m108.jpg	loa-vi-tinh-microlab-m108.jpg	\N	\N	\N	\N
+73	Loa Bluetooth Harman Kardon	Aura Studio 3	69000000	69000000	5	2020-07-12	15	loa-bluetooth-harman.jpg	t	t	f	f	f	f	9	5	Loa	loa-bluetooth-harman.jpg	loa-bluetooth-harman.jpg	loa-bluetooth-harman.jpg	\N	\N	\N	\N
+74	Loa Bluetooth Harman Kardon	Go + Play mini	5900000	5900000	6	2020-07-12	15	loa-bluetooth-harman-kardon.jpg	t	t	f	f	f	f	9	5	Loa	loa-bluetooth-harman-kardon.jpg	loa-bluetooth-harman-kardon.jpg	loa-bluetooth-harman-kardon.jpg	\N	\N	\N	\N
+\.
+
+
+--
+-- TOC entry 2871 (class 0 OID 188467)
+-- Dependencies: 205
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.users (id_user, full_name, password, phone, email, address, activated, admin, images) FROM stdin;
+Hau1234	Hau Alan1	12345678	347310658897	haunguyenvanit07@gmail.com	\N	t	f	2.jpg
+Hau1235	Lê long	123	035416546168	nguyet@gmail.com	\N	t	t	4.jpg
+ThanhHai123	Nguyễn Thành Hải	123456	015468726	haunguyenvanit07@gmail.com	C24/10, 449, Tăng Nhownn Phú A, TP. Thủ Đức	t	f	oppo-reno6.jpg
+\.
+
+
+--
+-- TOC entry 2882 (class 0 OID 0)
+-- Dependencies: 209
+-- Name: order_details_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.order_details_id_seq', 23, true);
+
+
+--
+-- TOC entry 2883 (class 0 OID 0)
+-- Dependencies: 208
+-- Name: orders_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.orders_id_seq', 25, true);
+
+
+--
+-- TOC entry 2884 (class 0 OID 0)
+-- Dependencies: 210
+-- Name: products_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.products_id_seq', 1, false);
+
+
+--
+-- TOC entry 2729 (class 2606 OID 139309)
+-- Name: categorys Category_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.categorys
+    ADD CONSTRAINT "Category_pkey" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2731 (class 2606 OID 139324)
+-- Name: menus menus_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.menus
+    ADD CONSTRAINT menus_pkey PRIMARY KEY (id, link, name);
+
+
+--
+-- TOC entry 2737 (class 2606 OID 196671)
+-- Name: order_details order_details_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.order_details
+    ADD CONSTRAINT order_details_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2735 (class 2606 OID 196666)
+-- Name: orders order_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT order_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2727 (class 2606 OID 106515)
+-- Name: products products_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.products
+    ADD CONSTRAINT products_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2733 (class 2606 OID 196705)
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id_user);
+
+
+--
+-- TOC entry 2738 (class 2606 OID 221483)
+-- Name: products fk_cate_pro; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.products
+    ADD CONSTRAINT fk_cate_pro FOREIGN KEY (id_category) REFERENCES public.categorys(id);
+
+
+--
+-- TOC entry 2741 (class 2606 OID 196677)
+-- Name: order_details fk_order_details; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.order_details
+    ADD CONSTRAINT fk_order_details FOREIGN KEY (id_orders) REFERENCES public.orders(id);
+
+
+--
+-- TOC entry 2739 (class 2606 OID 196706)
+-- Name: orders fk_order_user; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT fk_order_user FOREIGN KEY (id_users) REFERENCES public.users(id_user);
+
+
+--
+-- TOC entry 2740 (class 2606 OID 196672)
+-- Name: order_details fk_pro_orderdetails; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.order_details
+    ADD CONSTRAINT fk_pro_orderdetails FOREIGN KEY (id_products) REFERENCES public.products(id);
+
+
+-- Completed on 2022-03-13 23:51:12
+
+--
+-- PostgreSQL database dump complete
+--
+
