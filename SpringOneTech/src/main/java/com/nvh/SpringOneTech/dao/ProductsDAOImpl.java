@@ -224,6 +224,13 @@ public class ProductsDAOImpl implements IProductsDao {
 		return list;
 	}
 
-	
+	@Override
+	public Products findProductByID(int id) {
+		for(Products pro : findAll()) {
+			if(pro.getId()==id)
+				return pro;
+		}
+		return null;
+	}
 
 }

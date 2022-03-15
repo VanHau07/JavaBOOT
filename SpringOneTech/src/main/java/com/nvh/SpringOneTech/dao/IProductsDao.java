@@ -57,6 +57,6 @@ public interface IProductsDao {
 
 	List<Products> findHot();
 
-	
+	public Products findProductByID(int id);
 	
 }

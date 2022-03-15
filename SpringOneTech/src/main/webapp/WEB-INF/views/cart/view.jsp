@@ -1,6 +1,7 @@
 <%@ page pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="f"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <c:set var="cart" value="${sessionScope['scopedTarget.cartService']}" />
 <!DOCTYPE HTML>
@@ -45,7 +46,7 @@
 }
 </style>
 <body>
-			
+
 	<!-- Cart -->
 
 	<div class="cart_section">
@@ -60,7 +61,7 @@
 								<tr class="small text-uppercase">
 									<th class="cart_item_title cart_info_col">Sản phẩm</th>
 									<th class="cart_item_title cart_info_col">Số lượng</th>
-									<th class="cart_item_title cart_info_col">Màu</th>
+									<th class="cart_item_title cart_info_col" style="width: 250px;">Màu</th>
 									<th class="cart_item_title cart_info_col">Giá</th>
 									<th class="cart_item_title cart_info_col"></th>
 								</tr>
@@ -90,8 +91,7 @@
 													src="${pageContext.request.contextPath}/webapp/static/resources/images/${p.hinh_anh}"
 													class="img-sm">
 											</div> ${p.ten}</br> <small class="cart_item_title"> Giá: <f:formatNumber
-													value="${p.gia_goc}" pattern="#,###" />đ </br> Giảm giá:
-												<f:formatNumber
+													value="${p.gia_goc}" pattern="#,###" />đ </br> Giảm giá: <f:formatNumber
 													value="${p.ma_giam}" pattern="#,###" />%
 										</small>
 
@@ -99,38 +99,42 @@
 
 										</td>
 										<td class="cart_item_text"><input
-											class="cart_item_text dsl" id="num" value="${p.soluong}"
+											class="cart_item_text dsl" id="num1" value="${p.soluong}"
 											type="number" min="1"></td>
 
-										<td class="cart_item_text">
-										
-										
-										
-										
-										
-										<select style="color: black" id="gender1">
-										<option >Mặc định</option>
-												<option >Xanh Lá</option>
+										<td class="cart_item_texs"><select style="color: black"
+											id="gender1">
+												<option>Mặc định</option>
+												<option>Xanh Lá</option>
 												<option>Xanh Dương</option>
 												<option>Cam</option>
 												<option>Xanh Đậm</option>
-										</select>
-							
+										</select></td>
 
-								</td>
+										<td class="cart_item_text"><f:formatNumber
+												value="${p.soluong * p.gia_goc * (1 -( p.ma_giam/100))}"
+												pattern="#,###" />đ</td>
 
-								<td class="amt cart_item_text"><f:formatNumber
-										value="${p.soluong * p.gia_goc * (1 -( p.ma_giam/100))}"
-										pattern="#,###" />đ</td>
-
-								<td class="cart_item_text"><a
-									class="btn btn-light btn-cart-remove dkxl dkxl1"> XÓA </a></br> <a
-									onclick="tai_lai_trang()" class="btn btn-light  dkxl dkxl2">
-										CẬP NHẬT </a></td>
-								</tr>
-
+										<td class="cart_item_text"><a
+											class="btn btn-light btn-cart-remove dkxl dkxl1"> XÓA </a></br> <a
+											onclick="tai_lai_trang()" class="btn btn-light  dkxl dkxl2">
+												CẬP NHẬT </a></td>
+									</tr>
 								</c:forEach>
-
+								<tr style="text-align: right;">
+									<td colspan="4">
+										<h6>TỔNG CỘNG TIỀN THANH TOÁN</h6>
+									</td>
+									<td colspan="4"><c:if test="${empty cart.amount}">
+											<span><fmt:formatNumber value="0" type="number"
+													maxIntegerDigits="14" />(VNĐ)</span>
+										</c:if> <c:if test="${not empty cart.amount}">
+											<h4>
+												<span><fmt:formatNumber value="${cart.amount }"
+														type="number" maxIntegerDigits="14" />(VNĐ)</span>
+											</h4>
+										</c:if></td>
+								</tr>
 
 
 

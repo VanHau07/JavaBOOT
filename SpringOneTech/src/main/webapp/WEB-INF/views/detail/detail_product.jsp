@@ -139,8 +139,8 @@
 
 							<div data-id="${prod.id}" class="button_container ">
 
-								<button type="button" class="cart-button btn-add-to-cart">
-									<span id="btn" class="add-to-cart" onclick="tai_lai_trang()">MUA NGAY</span> <span
+								<button type="button" onclick="tai_lai_trang()" class="cart-button btn-add-to-cart">
+									<span id="btn" class="add-to-cart" >MUA NGAY</span> <span
 										class="added">ĐÃ MUA</span> <i class="fa fa-shopping-cart"></i>
 									<i class="fa fa-square"></i>
 								</button>
@@ -151,6 +151,7 @@
 									</button>
 								</a>
 							</div>
+							
 						</form>
 					</div>
 

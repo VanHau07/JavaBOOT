@@ -13,7 +13,7 @@ import com.nvh.SpringOneTech.entity.Products;
 
 @SessionScope // Name: scopedTarget.cartService
 @Service
-public class CartService {
+public class CartService{
 
 	@Autowired
 	IProductsDao dao;
@@ -69,5 +69,4 @@ public class CartService {
 	public Collection<Products> getItems() {
 		return map.values();
 	}
-
 }

@@ -24,6 +24,7 @@ public class ShoppingCartController {
 	IProductsDao pdao;
 	@Autowired
 	ICategorysDao cdao;
+	
 	@ResponseBody
 	@RequestMapping("/cart/update/{id}/{qty}")
 	public Object[] update(@PathVariable("id") Integer id, @PathVariable("qty") Integer qty) {
@@ -55,6 +56,8 @@ public class ShoppingCartController {
 		model.addAttribute("listscate", listscate);
 		List<Menus> listMenu = pdao.findMenu();
 		model.addAttribute("listMenu", listMenu);
+		
+		model.addAttribute("Cart_items", cart.getItems());
 		return "cart/view";
 	}
 	
